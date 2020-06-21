@@ -1,0 +1,72 @@
+
+rm(list=ls())
+
+Academic_Year      <-c('2009-10','2010-11','2011-12','2012-13','2013-14')
+Attempts_E80       <-c(144,151,132,126,66)
+Successes_E80      <-c(84,107,105,88,35)
+df_E80             <-data.frame(Academic_Year,Attempts_E80,Successes_E80)
+
+Attempts_E90       <-c(59,82,73,76,31)
+Successes_E90      <-c(36,49,47,50,15)
+df_E90             <-data.frame(Academic_Year,Attempts_E90 ,Successes_E90 )
+ 
+Attempts_E100      <-c(39,53,47,44,7)
+Successes_E100     <-c(17,26,23,19,1)
+df_E100            <-data.frame(Academic_Year,Attempts_E100 ,Successes_E100 )
+
+df_E80$success_rate  <- (df_E80$Successes_E80/df_E80$Attempts_E80)*100
+df_E90$success_rate  <- (df_E90$Successes_E90/df_E90$Attempts_E90)*100
+df_E100$success_rate <- (df_E100$Successes_E100/df_E100$Attempts_E100)*100
+
+df_E80_E90_E100<-data.frame(Academic_Year,df_E80$success_rate,df_E90$success_rate,df_E100$success_rate)
+
+names(df_E80_E90_E100)[2] <- "E80success_rate"
+names(df_E80_E90_E100)[3] <- "E90success_rate"
+names(df_E80_E90_E100)[4] <- "E100success_rate"
+
+summary(df_E80_E90_E100$E80success_rate)
+summary(df_E80_E90_E100$E90success_rate)
+summary(df_E80_E90_E100$E100success_rate)
+
+
+plot(df_E80_E90_E100$E80success_rate,
+     xlab="Academic Year",
+     ylab="Success Rate Percentage",
+     type="o",
+     col='Blue',
+     pch='o',
+     lty=1,
+     main='Success Rate Vs Academic Year',
+     xaxt="n",
+     ylim=c(10,80))
+
+axis(side=1,at=c(1,2,3,4,5),labels=c('2009-10','2010-11','2011-12','2012-13','2013-14'))
+
+points(df_E80_E90_E100$E90success_rate, col="red",lty=1,pch="o")
+ lines(df_E80_E90_E100$E90success_rate, col="red",lty=1,pch="o")
+
+points(df_E80_E90_E100$E100success_rate, col="green",lty=1,pch="o")
+ lines(df_E80_E90_E100$E100success_rate, col="green",lty=1,pch="o")
+
+legend("topright",
+       legend=c("English 80","English 90","English 100"), 
+       col=c("blue","red","green"),
+       fill=c("blue","red","green"),
+       ncol=1)
+
+var.test(df_E80_E90_E100$E80success_rate, df_E80_E90_E100$E90success_rate)
+var.test(df_E80_E90_E100$E90success_rate, df_E80_E90_E100$E100success_rate)
+
+t.test(df_E80_E90_E100$E80success_rate, df_E80_E90_E100$E90success_rate)
+t.test(df_E80_E90_E100$E90success_rate, df_E80_E90_E100$E100success_rate)
+t.test(df_E80_E90_E100$E80success_rate, df_E80_E90_E100$E100success_rate)
+
+prop.test(c(419,197,86),c(619,321,190))
+
+
+
+
+
+
+
+
